@@ -10,6 +10,7 @@ import org.jgrapht.*;
 
 public class Graph {
 	private HashMap<String, Integer> userToIndex;
+	private ArrayList<String> indexToUser;
 	private ArrayList<ArrayList<Tuple<Integer, Integer>>> graph;
 	private HashSet<Tuple<Integer, Integer>> edgeSet;
 	private int nodeNum = 0;
@@ -21,6 +22,7 @@ public class Graph {
 	public int addNode(String name, boolean isAddEdge){
 		if(userToIndex.containsKey(name) == false){
 			userToIndex.put(name, nodeNum);
+			indexToUser.add(name);
 			graph.add(new ArrayList<Tuple<Integer, Integer>>());
 			nodeNum+=1;
 		}
@@ -29,6 +31,7 @@ public class Graph {
 	public int addNode(String name){
 		if(userToIndex.containsKey(name) == false){
 			userToIndex.put(name, nodeNum);
+			indexToUser.add(name);
 			graph.add(new ArrayList<Tuple<Integer, Integer>>());
 			nodeNum+=1;
 		}else{
@@ -46,6 +49,19 @@ public class Graph {
 		edgeSet.add(new Tuple(u, v));
 		graph.get(u).add(new Tuple(v, weight));
 		graph.get(v).add(new Tuple(u, weight));
+	}
+	public HashMap<String, HashMap<String, Double>> getJGraphData(){
+		HashMap<String, HashMap<String, Double>> res = new HashMap();
+		for(int i = 0; i < nodeNum; i++){
+			HashMap<String, Double> tmp = new HashMap();
+			for(int j = 0; j < graph.get(i).size(); j++){
+				int v = graph.get(i).get(j)._1();
+				int w = graph.get(i).get(j)._2();
+				tmp.put(indexToUser.get(v), (double) w);
+			}
+			res.put(indexToUser.get(i), tmp);
+		}
+		return res;
 	}
 	public int[][] getAdjMatrix(){
 		int[][] gMat = new int[nodeNum][nodeNum];
