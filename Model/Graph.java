@@ -13,6 +13,7 @@ public class Graph {
 	private ArrayList<String> indexToUser;
 	private ArrayList<ArrayList<Tuple<Integer, Integer>>> graph;
 	private HashSet<Tuple<Integer, Integer>> edgeSet;
+	private int[][] dist;
 	private int nodeNum = 0;
 	public Graph(){
 		nodeNum = 0;
@@ -99,6 +100,10 @@ public class Graph {
 	        }
 		}
 		return d;
+	}
+	public void getAnyTwoShortestPath(){
+		dist = new int[nodeNum][nodeNum];
+		dist[0] = SPFA(0);
 	}
 	public static <T> void swap(T t1, T t2){  
 	    T tmp = t1;  
