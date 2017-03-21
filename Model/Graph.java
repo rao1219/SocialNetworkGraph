@@ -14,11 +14,15 @@ public class Graph {
 	private ArrayList<ArrayList<Tuple<Integer, Integer>>> graph;
 	private HashSet<Tuple<Integer, Integer>> edgeSet;
 	private int[][] dist;
+	private boolean isNewest;
 	private int nodeNum = 0;
 	public Graph(){
 		nodeNum = 0;
 		userToIndex = new HashMap<>();
+		indexToUser = new ArrayList<>();
+		edgeSet = new HashSet<>();
 		graph = new ArrayList<>();
+		isNewest = true;
 	}
 	public int addNode(String name, boolean isAddEdge){
 		if(userToIndex.containsKey(name) == false){
@@ -43,18 +47,19 @@ public class Graph {
 	public void addEdge(String na, String nb, int weight){
 		int u = addNode(na), v = addNode(nb);
 		if(u > v) swap(u, v);
-		if(edgeSet.contains(new Tuple(u, v))){
+		if(edgeSet.contains(new Tuple<>(u, v))){
 			System.out.format("The edge(%d, %d) is already exist", u, v);
 			return ;
 		}
-		edgeSet.add(new Tuple(u, v));
-		graph.get(u).add(new Tuple(v, weight));
-		graph.get(v).add(new Tuple(u, weight));
+		edgeSet.add(new Tuple<>(u, v));
+		graph.get(u).add(new Tuple<>(v, weight));
+		graph.get(v).add(new Tuple<>(u, weight));
+		isNewest = false;
 	}
 	public HashMap<String, HashMap<String, Double>> getJGraphData(){
-		HashMap<String, HashMap<String, Double>> res = new HashMap();
+		HashMap<String, HashMap<String, Double>> res = new HashMap<>();
 		for(int i = 0; i < nodeNum; i++){
-			HashMap<String, Double> tmp = new HashMap();
+			HashMap<String, Double> tmp = new HashMap<>();
 			for(int j = 0; j < graph.get(i).size(); j++){
 				int v = graph.get(i).get(j)._1();
 				int w = graph.get(i).get(j)._2();
@@ -103,7 +108,25 @@ public class Graph {
 	}
 	public void getAnyTwoShortestPath(){
 		dist = new int[nodeNum][nodeNum];
-		dist[0] = SPFA(0);
+		for(int i = 0; i < nodeNum; i++){
+			dist[i] = SPFA(i);
+		}
+		isNewest = true;
+	}
+	public int[] getNodeWeight() throws Exception{
+		if(!isNewest){
+			throw new Exception("shortest path is outdated, please calculate it again!(run getAnyTwoShortestPath before this)");
+		}
+		int[] weight = new int[nodeNum];
+		for(int x = 0; x < nodeNum; x++){
+			for(int u = 0; u < nodeNum; u++){
+				for(int v = 0; v < nodeNum; v++){
+					if(dist[u][v] == dist[u][x] + dist[x][v])
+						weight[x] += 1;
+				}
+			}
+		}
+		return weight;
 	}
 	public static <T> void swap(T t1, T t2){  
 	    T tmp = t1;  
