@@ -56,20 +56,34 @@ public class Graph {
 		}
 		return gMat;
 	}
-//	public int[] SPFA(int s){
-//		int[] d = new int[nodeNum];
-//		boolean[] inq = new boolean[nodeNum];
-//		
-//		for(int i = 0; i < nodeNum; i++) d[i] = (int) 1e9;
-//		d[s] = 0;
-//		Queue<Integer> que = new LinkedList<Integer>();
-//		que.offer(s);
-//		inq[s] = true;
-//		while(!que.isEmpty()){
-//			
-//		}
-//		return d;
-//	}
+	public int[] SPFA(int s){
+		int[] d = new int[nodeNum];
+		boolean[] inq = new boolean[nodeNum];
+		
+		for(int i = 0; i < nodeNum; i++) d[i] = (int) 1e9;
+		d[s] = 0;
+		Queue<Integer> que = new LinkedList<Integer>();
+		que.offer(s);
+		inq[s] = true;
+		while(!que.isEmpty()){
+			int x=que.poll();
+	        inq[x]=false;
+	        for(int i = 0; i < graph.get(x).size(); i++){
+	        	Tuple tmp = graph.get(x).get(i);
+	        	int v = (int) tmp._1(), w = (int) tmp._2();
+	            if(d[v]>d[x]+w)  
+	            {  
+	            	d[v] = d[x]+w;  
+	                if(!inq[v])  
+	                {  
+	                    inq[v]=true;  
+	                    que.offer(v);  
+	                }  
+	            }  
+	        }
+		}
+		return d;
+	}
 	public static <T> void swap(T t1, T t2){  
 	    T tmp = t1;  
 	    t1 = t2;  
