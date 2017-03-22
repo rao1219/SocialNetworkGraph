@@ -1,6 +1,7 @@
 package Model;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -15,10 +16,31 @@ import com.mxgraph.swing.*;
 public class JGraphXRun
     extends JApplet
 {
+	static class Edge{
+		private String node_l;
+		private String node_r;
+		private double weight;
+		Edge(String nl,String nr,double w){
+			this.node_l = nl;
+			this.node_r = nr;
+			this.weight = w;
+		}
+		public String getNodeLeft(){
+			return this.node_l;
+		}
+		public String getNodeRight(){
+			return this.node_r;
+		}
+		public double getWeight(){
+			return this.weight;
+		}
+	};
     private static final long serialVersionUID = 2202072534703043194L;
     private static final Dimension DEFAULT_SIZE = new Dimension(530, 320);
     private ListenableUndirectedWeightedGraph<String, DefaultWeightedEdge> g;
     private HashMap<String, HashMap<String, Double>> weightsHash;
+    private ArrayList<String> nodeList;
+    private ArrayList<Edge> edgeList;
 
     private JGraphXAdapter<String, DefaultWeightedEdge> jgxAdapter;
     
@@ -86,6 +108,12 @@ public class JGraphXRun
     		case "karate":;// To do
     		case "football":;
     		case "polblog":;
+    	}
+    	for(String n:nodeList){
+    		this.addNodeHash(n);
+    	}
+    	for(Edge e:edgeList){
+    		this.addEdgeWeight(e.getNodeLeft(), e.getNodeRight(), e.getWeight());
     	}
     }
     @Override
