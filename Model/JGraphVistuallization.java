@@ -122,7 +122,7 @@ public class JGraphVistuallization
         getContentPane().add(new mxGraphComponent(jgxAdapter));
         resize(DEFAULT_SIZE);
         
-//        baseGraph();
+        baseGraph();
         //extendMyGraph(7, 20, 1);
         
         // positioning via jgraphx layouts
@@ -131,11 +131,10 @@ public class JGraphVistuallization
 
     }
     public void run(String title){
-    	JGraphVistuallization applet = new JGraphVistuallization();
-        applet.init();
+    	this.init();
         
         JFrame frame = new JFrame();
-        frame.getContentPane().add(applet);
+        frame.getContentPane().add(this);
         frame.setTitle(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
