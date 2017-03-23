@@ -1,8 +1,11 @@
 package Model;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -13,7 +16,7 @@ import org.jgrapht.graph.*;
 import com.mxgraph.layout.*;
 import com.mxgraph.swing.*;
 
-public class JGraphXRun
+public class JGraphVistuallization
     extends JApplet
 {
 	static class Edge{
@@ -39,12 +42,10 @@ public class JGraphXRun
     private static final Dimension DEFAULT_SIZE = new Dimension(530, 320);
     private ListenableUndirectedWeightedGraph<String, DefaultWeightedEdge> g;
     private HashMap<String, HashMap<String, Double>> weightsHash;
-    private ArrayList<String> nodeList;
-    private ArrayList<Edge> edgeList;
 
     private JGraphXAdapter<String, DefaultWeightedEdge> jgxAdapter;
     
-    public JGraphXRun(){
+    public JGraphVistuallization(){
     	// create a JGraphT graph
     	weightsHash = new HashMap<String, HashMap<String,Double>>();	
     	g = new ListenableUndirectedWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -103,12 +104,8 @@ public class JGraphXRun
         this.addEdgeWeight(v2, v4, 1.9);
         
     }
-    private void generateGraph(String dataset){
-    	switch(dataset){
-    		case "karate":;// To do: Add nodes to nodeList, add edges to edgeList
-    		case "football":;
-    		case "polblog":;
-    	}
+    public void generateGraph(ArrayList<String> nodeList, ArrayList<Edge> edgeList){
+    	
     	for(String n:nodeList){
     		this.addNodeHash(n);
     	}
@@ -125,7 +122,7 @@ public class JGraphXRun
         getContentPane().add(new mxGraphComponent(jgxAdapter));
         resize(DEFAULT_SIZE);
         
-        baseGraph();
+//        baseGraph();
         //extendMyGraph(7, 20, 1);
         
         // positioning via jgraphx layouts
@@ -133,9 +130,21 @@ public class JGraphXRun
         layout.execute(jgxAdapter.getDefaultParent());
 
     }
+    public void run(String title){
+    	JGraphVistuallization applet = new JGraphVistuallization();
+        applet.init();
+        
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(applet);
+        frame.setTitle(title);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
     public static void main(String[] args)
     {
-        JGraphXRun applet = new JGraphXRun();
+        JGraphVistuallization applet = new JGraphVistuallization();
         applet.init();
         
         JFrame frame = new JFrame();

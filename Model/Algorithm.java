@@ -8,7 +8,7 @@ import java.util.Queue;
 
 import org.jgrapht.*;
 
-public class Graph {
+public class Algorithm {
 	private HashMap<String, Integer> userToIndex;
 	private ArrayList<String> indexToUser;
 	private ArrayList<ArrayList<Tuple<Integer, Integer>>> graph;
@@ -16,13 +16,19 @@ public class Graph {
 	private int[][] dist;
 	private boolean isNewest;
 	private int nodeNum = 0;
-	public Graph(){
+	public Algorithm(){
 		nodeNum = 0;
 		userToIndex = new HashMap<>();
 		indexToUser = new ArrayList<>();
 		edgeSet = new HashSet<>();
 		graph = new ArrayList<>();
 		isNewest = true;
+	}
+	public ArrayList getNodeList(){
+		return indexToUser;
+	}
+	public HashSet<Tuple<Integer, Integer>> getEdgeList(){
+		return edgeSet;
 	}
 	public int addNode(String name, boolean isAddEdge){
 		if(userToIndex.containsKey(name) == false){
@@ -40,15 +46,18 @@ public class Graph {
 			graph.add(new ArrayList<Tuple<Integer, Integer>>());
 			nodeNum+=1;
 		}else{
-			System.out.format("The name(%s) is already exist!", name);
+			System.out.format("The name(%s) is already exist!\n", name);
 		}
 		return userToIndex.get(name);
+	}
+	public String getNodeName(int u){
+		return indexToUser.get(u);
 	}
 	public void addEdge(String na, String nb, int weight){
 		int u = addNode(na), v = addNode(nb);
 		if(u > v) swap(u, v);
 		if(edgeSet.contains(new Tuple<>(u, v))){
-			System.out.format("The edge(%d, %d) is already exist", u, v);
+			System.out.format("The edge(%d, %d) is already exist\n", indexToUser.get(u), indexToUser.get(v));
 			return ;
 		}
 		edgeSet.add(new Tuple<>(u, v));
@@ -113,7 +122,7 @@ public class Graph {
 		}
 		isNewest = true;
 	}
-	public int[] getNodeWeight() throws Exception{
+	public int[] getNodeWeights() throws Exception{
 		if(!isNewest){
 			throw new Exception("shortest path is outdated, please calculate it again!(run getAnyTwoShortestPath before this)");
 		}

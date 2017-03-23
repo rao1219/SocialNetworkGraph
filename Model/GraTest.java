@@ -10,7 +10,7 @@ import org.jgrapht.graph.DefaultEdge;
 
 public class GraTest {
 	public static void main(String[] args){
-		Graph g = new Graph();
+		Algorithm g = new Algorithm();
 		g.addEdge("b", "a", 12);
 		g.addEdge("b", "c", 1);
 	}
