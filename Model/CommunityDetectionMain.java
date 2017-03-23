@@ -57,7 +57,7 @@ public class CommunityDetectionMain {
 		return this.weight;
 	}
 	public static void main(String[] args) throws Exception{
-		String DATA_INPUT = "karate";
+		String DATA_INPUT = "football";
 		
 		CommunityDetectionMain cdm = new CommunityDetectionMain();
 		cdm.readDataFromFile(DATA_INPUT);
