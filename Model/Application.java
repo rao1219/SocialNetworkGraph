@@ -6,22 +6,22 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import Model.JGraphVistuallization.Edge;
+import Model.Visuallizator.Edge;
 import Model.Algorithm;
 import Model.Algorithm.Tuple;
 
-public class CommunityDetectionMain {
+public class Application {
 	
     private ArrayList<String> nodeList;
     private ArrayList<Edge> edgeList;
     private Algorithm alg;
     private int[] weight;
-    public CommunityDetectionMain() {
+    public Application() {
 		this.nodeList = new ArrayList();
 		this.edgeList = new ArrayList();
 		this.alg = new Algorithm();
 	}
-	public CommunityDetectionMain(ArrayList<String> nodeList, ArrayList<Edge> edgeList, Algorithm alg) {
+	public Application(ArrayList<String> nodeList, ArrayList<Edge> edgeList, Algorithm alg) {
 		super();
 		this.nodeList = nodeList;
 		this.edgeList = edgeList;
@@ -59,9 +59,9 @@ public class CommunityDetectionMain {
 	public static void main(String[] args) throws Exception{
 		String DATA_INPUT = "football";
 		
-		CommunityDetectionMain cdm = new CommunityDetectionMain();
+		Application cdm = new Application();
 		cdm.readDataFromFile(DATA_INPUT);
-		JGraphVistuallization jgx = new JGraphVistuallization();
+		Visuallizator jgx = new Visuallizator();
 		jgx.generateGraph(cdm.nodeList, cdm.edgeList);
 		int[] weight = cdm.getWeights();
 		jgx.run("test");
