@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import Model.Visuallizator.Edge;
-import Model.Algorithm;
-import Model.Algorithm.Tuple;
+import model.Algorithm;
+import model.Algorithm.Tuple;
+import model.Visuallizator.Edge;
 
 public class Application {
 	
