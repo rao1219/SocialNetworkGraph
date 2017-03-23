@@ -105,7 +105,7 @@ public class JGraphXRun
     }
     private void generateGraph(String dataset){
     	switch(dataset){
-    		case "karate":;// To do
+    		case "karate":;// To do: Add nodes to nodeList, add edges to edgeList
     		case "football":;
     		case "polblog":;
     	}
