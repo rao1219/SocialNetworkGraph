@@ -46,7 +46,7 @@ public class Algorithm {
 			graph.add(new ArrayList<Tuple<Integer, Integer>>());
 			nodeNum+=1;
 		}else{
-			System.out.format("The name(%s) is already exist!\n", name);
+			//System.out.format("The name(%s) is already exist!\n", name);
 		}
 		return userToIndex.get(name);
 	}
@@ -57,7 +57,7 @@ public class Algorithm {
 		int u = addNode(na), v = addNode(nb);
 		if(u > v) swap(u, v);
 		if(edgeSet.contains(new Tuple<>(u, v))){
-			System.out.format("The edge(%d, %d) is already exist\n", indexToUser.get(u), indexToUser.get(v));
+			//System.out.format("The edge(%d, %d) is already exist\n", indexToUser.get(u), indexToUser.get(v));
 			return ;
 		}
 		edgeSet.add(new Tuple<>(u, v));
