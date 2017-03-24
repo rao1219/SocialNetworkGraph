@@ -97,7 +97,7 @@ public class Visuallizator
         getContentPane().add(new mxGraphComponent(jgxAdapter));
         resize(DEFAULT_SIZE);
         
-        baseGraph();
+        //baseGraph();
         //extendMyGraph(7, 20, 1);
         
         // positioning via jgraphx layouts

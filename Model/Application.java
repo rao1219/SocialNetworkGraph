@@ -57,7 +57,7 @@ public class Application {
 		return this.weight;
 	}
 	public static void main(String[] args) throws Exception{
-		String DATA_INPUT = "football";
+		String DATA_INPUT = "karate";
 		
 		Application cdm = new Application();
 		cdm.readDataFromFile(DATA_INPUT);
