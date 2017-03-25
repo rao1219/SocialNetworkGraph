@@ -14,6 +14,7 @@ public class Algorithm {
 	private ArrayList<ArrayList<Tuple<Integer, Integer>>> graph;
 	private HashSet<Tuple<Integer, Integer>> edgeSet;
 	private int[][] dist;
+	private int[] deg;
 	private boolean isNewest;
 	private int nodeNum = 0;
 	public Algorithm(){
@@ -23,6 +24,42 @@ public class Algorithm {
 		edgeSet = new HashSet<>();
 		graph = new ArrayList<>();
 		isNewest = true;
+	}
+	public int[] getDeg(){
+		deg = new int[nodeNum];
+		for(Tuple x : edgeSet){
+			int u = (int) x._1();
+			int v = (int) x._2();
+			deg[u]++;
+			deg[v]++;
+		}
+		return deg;
+	}
+	
+	/**
+	 * @param deg 图度数矩阵
+	 * @param nodeWeight 图中节点的权值
+	 * @param gMat 图的邻接矩阵
+	 * @return 该图的权值矩阵
+	 */
+	public double[][] getWeightMatrix(int[] deg, int[] nodeWeight, int[][] gMat){
+		double[][] wMatrix = new double[nodeNum][nodeNum];
+		for(int i = 0; i < nodeNum; i++)
+			wMatrix[i][i] = 0;
+		// 整个图中所有最短路的数量
+		double avrDeg = 0;
+		for(int i = 0; i < nodeNum; i++){
+			avrDeg += deg[i];
+		}
+		avrDeg /= nodeNum;
+		int allSPN = nodeNum*(nodeNum-1);
+		for(int i = 0;i < nodeNum; i++){
+			for(int j = 0; j < nodeNum; j++){
+				if(i == j) continue;
+				wMatrix[i][j] = (double)gMat[i][j] * nodeWeight[j] / avrDeg;
+			}
+		}
+		return wMatrix;
 	}
 	public ArrayList getNodeList(){
 		return indexToUser;
@@ -115,14 +152,15 @@ public class Algorithm {
 		}
 		return d;
 	}
-	public void getAnyTwoShortestPath(){
+	public int[][] getAnyTwoShortestPath(){
 		dist = new int[nodeNum][nodeNum];
 		for(int i = 0; i < nodeNum; i++){
 			dist[i] = SPFA(i);
 		}
 		isNewest = true;
+		return dist;
 	}
-	public int[] getNodeWeights() throws Exception{
+	public int[] getNodeWeights(int[][] dist) throws Exception{
 		if(!isNewest){
 			throw new Exception("shortest path is outdated, please calculate it again!(run getAnyTwoShortestPath before this)");
 		}

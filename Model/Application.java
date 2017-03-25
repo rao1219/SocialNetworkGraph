@@ -52,18 +52,22 @@ public class Application {
 		if(nodeList.size() == 0){
 			throw new Exception("The graph is empty!");
 		}
-		alg.getAnyTwoShortestPath();
-		this.weight = alg.getNodeWeights();
+		int[][] dist = alg.getAnyTwoShortestPath();
+		this.weight = alg.getNodeWeights(dist);
 		return this.weight;
 	}
+	
 	public static void main(String[] args) throws Exception{
 		String DATA_INPUT = "karate";
 		
-		Application cdm = new Application();
-		cdm.readDataFromFile(DATA_INPUT);
+		Application app = new Application();
+		app.readDataFromFile(DATA_INPUT);
 		Visuallizator jgx = new Visuallizator();
-		jgx.generateGraph(cdm.nodeList, cdm.edgeList);
-		int[] weight = cdm.getWeights();
+		jgx.generateGraph(app.nodeList, app.edgeList);
+		int[] weight = app.getWeights();
+		int[] deg = app.alg.getDeg();
+		int[][] gMat = app.alg.getAdjMatrix();
+		double[][] weightMatrix = app.alg.getWeightMatrix(deg, weight, gMat);
 		jgx.run("test");
 		for(int i:weight){
 			System.out.print(" "+i);
