@@ -63,14 +63,26 @@ public class Application {
 		Application app = new Application();
 		app.readDataFromFile(DATA_INPUT);
 		Visuallizator jgx = new Visuallizator();
+		Calculator cal = new Calculator();
 		jgx.generateGraph(app.nodeList, app.edgeList);
 		int[] weight = app.getWeights();
 		int[] deg = app.alg.getDeg();
 		int[][] gMat = app.alg.getAdjMatrix();
 		double[][] weightMatrix = app.alg.getWeightMatrix(deg, weight, gMat);
+		double[] eigens = cal.getEigenValues(weightMatrix);
+		double[][] eigenVevtors = cal.getEigenVectors(weightMatrix);
 		jgx.run("test");
 		for(int i:weight){
 			System.out.print(" "+i);
+		}
+		System.out.println('\n'+"Eigen values:");
+		for(int i=0;i<eigens.length;i++){
+			System.out.println("eigen value:"+'\t'+eigens[i]);
+			System.out.print("Vector:");
+			for(int j=0;j<eigenVevtors[i].length;j++){
+				System.out.print(eigenVevtors[i][j]+",");
+			}
+			System.out.println();
 		}
 	}
 }

@@ -1,41 +1,38 @@
 package model;
+
 import Jama.Matrix;
 
 import Jama.Matrix;
 import Jama.SingularValueDecomposition;
 
 public class Calculator {
-   public static void main(String[] args) { 
-
-      // create M-by-N matrix that doesn't have full rank
-      int M = 8, N = 5;
-      Matrix B = Matrix.random(5, 3);
-      Matrix A = Matrix.random(M, N).times(B).times(B.transpose());
-      System.out.print("A = ");
-      A.print(9, 6);
-
-      // compute the singular vallue decomposition
-      System.out.println("A = U S V^T");
-      System.out.println();
-      SingularValueDecomposition s = A.svd();
-      System.out.print("U = ");
-      Matrix U = s.getU();
-      U.print(9, 6);
-      System.out.print("Sigma = ");
-      Matrix S = s.getS();
-      S.print(9, 6);
-      System.out.print("V = ");
-      Matrix V = s.getV();
-      V.print(9, 6);
-      System.out.println("rank = " + s.rank());
-      System.out.println("condition number = " + s.cond());
-      System.out.println("2-norm = " + s.norm2());
-
-      // print out singular values
-      System.out.print("singular values = ");
-      Matrix svalues = new Matrix(s.getSingularValues(), 1);
-      svalues.print(9, 6);
-   }
-
+	
+	public double[] getEigenValues(double[][] weights){
+		Matrix A = new Matrix(weights);
+		return A.eig().getRealEigenvalues();
+	}
+	public double[][] getEigenVectors(double[][] weights){
+		Matrix A = new Matrix(weights);
+		return A.eig().getV().getArray();
+	}
+	public static void main(String[] args) {
+		Calculator cal = new Calculator();
+		double[][] d = null;
+		for(int i=0;i<2;i++){
+			for(int j=0;j<2;j++){
+				d[i][j] = 1;
+			}
+		}
+		double[] eigens = cal.getEigenValues(d);
+		double[][] eigenVevtors = cal.getEigenVectors(d);
+		for(int i=0;i<eigens.length;i++){
+			System.out.println("eigen value:"+'\t'+eigens[i]);
+			System.out.print("Vector:");
+			for(int j=0;j<eigenVevtors[i].length;j++){
+				System.out.print(eigenVevtors[i][j]+",");
+			}
+			System.out.println();
+		}
+		
+	}
 }
-
