@@ -7,16 +7,16 @@ public class KMeansResultado {
     private Double ofv;
 
     public KMeansResultado(List<Cluster> clusters, Double ofv) {
-	super();
-	this.ofv = ofv;
-	this.clusters = clusters;
+		super();
+		this.ofv = ofv;
+		this.clusters = clusters;
     }
 
     public List<Cluster> getClusters() {
-	return clusters;
+    	return clusters;
     }
 
     public Double getOfv() {
-	return ofv;
+    	return ofv;
     }
 }

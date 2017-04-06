@@ -10,6 +10,7 @@ import model.Algorithm;
 import model.Algorithm.Tuple;
 import model.Visuallizator.Edge;
 
+
 public class Application {
 	
     private ArrayList<String> nodeList;
@@ -58,6 +59,7 @@ public class Application {
 	}
 	
 	public static void main(String[] args) throws Exception{
+		
 		String DATA_INPUT = "karate";
 		
 		Application app = new Application();

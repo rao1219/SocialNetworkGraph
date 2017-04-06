@@ -92,7 +92,6 @@ public class KMeans {
 
 	List<Float> maximos = new ArrayList<Float>();
 	List<Float> minimos = new ArrayList<Float>();
-	// me fijo máximo y mínimo de cada dimensión
 
 	for (int i = 0; i < puntos.get(0).getGrado(); i++) {
 	    Float min = Float.POSITIVE_INFINITY, max = Float.NEGATIVE_INFINITY;
