@@ -10,7 +10,8 @@ public class KmeansParser {
 	private KMeansResultado resultado;
 	private int k;
 	public KmeansParser(List<String[]> myEntries){
-		for (String[] strings : myEntries) {
+		puntos = new ArrayList<Punto>();
+		for (String[] strings: myEntries) {
 		    Punto p = new Punto(strings);
 		    this.puntos.add(p);
 		}
