@@ -65,8 +65,8 @@ public class Application {
 		Application app = new Application();
 		app.readDataFromFile(DATA_INPUT);
 		Visuallizator jgx = new Visuallizator();
-		Calculator cal = new Calculator();
 		jgx.generateGraph(app.nodeList, app.edgeList);
+		Calculator cal = new Calculator(app.alg);
 		int[] weight = app.getWeights();
 		int[] deg = app.alg.getDeg();
 		int[][] gMat = app.alg.getAdjMatrix();

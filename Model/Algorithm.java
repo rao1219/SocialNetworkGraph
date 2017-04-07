@@ -90,6 +90,27 @@ public class Algorithm {
 	public String getNodeName(int u){
 		return indexToUser.get(u);
 	}
+	public HashMap<String, Integer> getUserToIndex() {
+		return userToIndex;
+	}
+	public ArrayList<String> getIndexToUser() {
+		return indexToUser;
+	}
+	public ArrayList<ArrayList<Tuple<Integer, Integer>>> getGraph() {
+		return graph;
+	}
+	public HashSet<Tuple<Integer, Integer>> getEdgeSet() {
+		return edgeSet;
+	}
+	public int[][] getDist() {
+		return dist;
+	}
+	public boolean isNewest() {
+		return isNewest;
+	}
+	public int getNodeNum() {
+		return nodeNum;
+	}
 	public void addEdge(String na, String nb, int weight){
 		int u = addNode(na), v = addNode(nb);
 		if(u > v) swap(u, v);

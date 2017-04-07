@@ -14,5 +14,6 @@ public class Test {
     	
     	KmeansParser parser = new KmeansParser(myEntries);
     	parser.doKmeans(5);
+    	parser.
     }
 }
