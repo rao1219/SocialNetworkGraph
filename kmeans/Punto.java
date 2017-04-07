@@ -3,22 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Punto {
-    private Float[] data;
+    private Double[] data;
 
-    public Punto(String[] strings) {
-		super();
-		List<Float> puntos = new ArrayList<Float>();
-		for (String string : strings) {
-		    puntos.add(Float.parseFloat(string));
-		}
-		this.data = puntos.toArray(new Float[strings.length]);
-    }
-
-    public Punto(Float[] data) {
+    public Punto(Double[] data) {
     	this.data = data;
     }
 
-    public float get(int dimension) {
+    public double get(int dimension) {
     	return data[dimension];
     }
 

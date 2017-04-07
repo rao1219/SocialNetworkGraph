@@ -9,10 +9,10 @@ public class KmeansParser {
 	private List<Punto> puntos;
 	private KMeansResultado resultado;
 	private int k;
-	public KmeansParser(List<String[]> myEntries){
+	public KmeansParser(List<Double[]> myEntries){
 		puntos = new ArrayList<Punto>();
-		for (String[] strings: myEntries) {
-		    Punto p = new Punto(strings);
+		for (Double[] inputs: myEntries) {
+		    Punto p = new Punto(inputs);
 		    this.puntos.add(p);
 		}
 	}

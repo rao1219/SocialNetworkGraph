@@ -26,7 +26,7 @@ public class KMeans {
 		continue;
 	    }
 
-	    Float[] d = new Float[c.getPuntos().get(0).getGrado()];
+	    Double[] d = new Double[c.getPuntos().get(0).getGrado()];
 	    Arrays.fill(d, 0f);
 	    for (Punto p : c.getPuntos()) {
 		for (int i = 0; i < p.getGrado(); i++) {
@@ -90,11 +90,11 @@ public class KMeans {
     private List<Cluster> elegirCentroides(List<Punto> puntos, Integer k) {
 	List<Cluster> centroides = new ArrayList<Cluster>();
 
-	List<Float> maximos = new ArrayList<Float>();
-	List<Float> minimos = new ArrayList<Float>();
+	List<Double> maximos = new ArrayList<Double>();
+	List<Double> minimos = new ArrayList<Double>();
 
 	for (int i = 0; i < puntos.get(0).getGrado(); i++) {
-	    Float min = Float.POSITIVE_INFINITY, max = Float.NEGATIVE_INFINITY;
+	    Double min = Double.POSITIVE_INFINITY, max = Double.NEGATIVE_INFINITY;
 
 	    for (Punto punto : puntos) {
 		min = min > punto.get(i) ? punto.get(0) : min;
@@ -108,10 +108,10 @@ public class KMeans {
 	Random random = new Random();
 
 	for (int i = 0; i < k; i++) {
-	    Float[] data = new Float[puntos.get(0).getGrado()];
+	    Double[] data = new Double[puntos.get(0).getGrado()];
 	    Arrays.fill(data, 0f);
 	    for (int d = 0; d < puntos.get(0).getGrado(); d++) {
-		data[d] = random.nextFloat()
+		data[d] = random.nextDouble()
 			* (maximos.get(d) - minimos.get(d)) + minimos.get(d);
 	    }
 
