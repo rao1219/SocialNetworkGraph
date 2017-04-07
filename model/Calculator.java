@@ -1,5 +1,7 @@
 package model;
 
+import java.io.ObjectInputStream.GetField;
+
 import Jama.Matrix;
 
 import Jama.Matrix;
@@ -50,7 +52,7 @@ public class Calculator {
 	}
 	public static void main(String[] args) {
 		Calculator cal = new Calculator();
-		double[][] d = null;
+		double[][] d = new double[2][2];
 		for(int i=0;i<2;i++){
 			for(int j=0;j<2;j++){
 				d[i][j] = 1;
