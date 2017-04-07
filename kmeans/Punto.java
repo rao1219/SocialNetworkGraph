@@ -2,11 +2,22 @@ package kmeans;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Punto {
+public class Punto implements Comparable<Punto>{
     private Double[] data;
-
-    public Punto(Double[] data) {
+    private int label;
+    private int clu;
+    public Punto(Double[] data,int label) {
     	this.data = data;
+    	this.label = label;
+    }
+    public int getLabel(){
+    	return this.label;
+    }
+    public void setClass(int c){
+    	this.clu = c;
+    }
+    public int getCluster(){
+    	return this.clu;
     }
 
     public double get(int dimension) {
@@ -46,4 +57,9 @@ public class Punto {
 		}
 		return true;
     }
+	public int compareTo(Punto p) {
+		// TODO Auto-generated method stub
+		return this.getLabel()-p.getLabel();
+	}
+	
 }

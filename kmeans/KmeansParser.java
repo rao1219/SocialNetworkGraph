@@ -2,17 +2,20 @@ package kmeans;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class KmeansParser {
 
 	private List<Punto> puntos;
+	private List<Punto> resPuntos;
 	private KMeansResultado resultado;
 	private int k;
 	public KmeansParser(List<Double[]> myEntries){
 		puntos = new ArrayList<Punto>();
-		for (Double[] inputs: myEntries) {
-		    Punto p = new Punto(inputs);
+		resPuntos = new ArrayList<Punto>();
+		for (int i =0;i<myEntries.size();i++) {
+		    Punto p = new Punto(myEntries.get(i),i);
 		    this.puntos.add(p);
 		}
 	}
@@ -23,14 +26,37 @@ public class KmeansParser {
 		this.k = k;
 		KMeans kmeans = new KMeans();
 		this.resultado = kmeans.calcular(puntos, this.k);
-		try{
-			saveFile();
-		}catch(Exception e){}
+		setClusterLabel();
 	}
 	public KMeansResultado getKmeansResult(int k){
 		return this.resultado;
 	}
-	private void saveFile() throws Exception{
+	
+	public void setClusterLabel(){
+		int i = 0;
+		for(Cluster cluster: resultado.getClusters()){
+			for (Punto punto : cluster.getPuntos()) {
+			    punto.setClass(i);
+			    resPuntos.add(punto);
+			}
+			i++;
+		}
+	}
+	/**
+	 * @return cluster of each puntos
+	 * */
+	public int[] getResults(){
+		int[] res = null;
+		Collections.sort(resPuntos);
+		int i=0;
+		for(Punto p: resPuntos){
+			res[i] = p.getCluster();
+			i++;
+		}
+		return res;
+	}
+	
+	public void saveFile() throws Exception{
 		FileWriter writer = new FileWriter("kmeans_out.csv");
 		writer.write("------- Con k=" + k + " ofv=" + resultado.getOfv()
 		    + "-------\n");

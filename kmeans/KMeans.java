@@ -34,7 +34,7 @@ public class KMeans {
 		}
 	    }
 
-	    Punto nuevoCentroide = new Punto(d);
+	    Punto nuevoCentroide = new Punto(d,-1);
 
 	    if (nuevoCentroide.equals(c.getCentroide())) {
 		c.setTermino(true);
@@ -116,7 +116,7 @@ public class KMeans {
 	    }
 
 	    Cluster c = new Cluster();
-	    Punto centroide = new Punto(data);
+	    Punto centroide = new Punto(data,-1);
 	    c.setCentroide(centroide);
 	    centroides.add(c);
 	}
