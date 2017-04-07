@@ -9,6 +9,7 @@ import Jama.Matrix;
 
 import Jama.Matrix;
 import Jama.SingularValueDecomposition;
+import kmeans.KmeansParser;
 
 public class Calculator {
 	public Algorithm getAlg() {
@@ -99,12 +100,25 @@ public class Calculator {
 		 * TODO 得到待分类的向量集合
 		 */
 		
-		for(int i = 1; i < g; i++){
-			
+		for(int i = 1; i < g && i < eigens.size(); i++){
 			/*
 			 * TODO kmeasn 聚类
 			 */
+			List<Double[]> vectors = new ArrayList<>();
+			for(int j = 0; j < alg.getNodeNum(); j ++){
+				Double[] vec = new Double[i];
+				for(int k = 0; k < i; k++){
+					vec[k] = eigens.get(k).eVector[j];
+				}
+				vectors.add(vec);
+			}
+			KmeansParser kp = new KmeansParser(vectors);
+			int[] kind = kp.getCluster(g);
 			
+			double qv = this.getQ(kind);
+			/*
+			 * 得到模块度Q值，作出评价
+			 */
 		}
 		
 	}

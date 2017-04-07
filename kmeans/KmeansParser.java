@@ -45,7 +45,7 @@ public class KmeansParser {
 	/**
 	 * @return cluster of each puntos
 	 * */
-	public int[] getResults(int k){
+	public int[] getCluster(int k){
 		doKmeans(k);
 		int[] res = null;
 		Collections.sort(resPuntos);
