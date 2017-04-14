@@ -38,6 +38,7 @@ public class KmeansParser {
 			for (Punto punto : cluster.getPuntos()) {
 			    punto.setClass(i);
 			    resPuntos.add(punto);
+//			    System.out.println(resPuntos.get(0).toString());
 			}
 			i++;
 		}
@@ -47,7 +48,7 @@ public class KmeansParser {
 	 * */
 	public int[] getCluster(int k){
 		doKmeans(k);
-		int[] res = null;
+		int[] res = new int[resPuntos.size()];
 		Collections.sort(resPuntos);
 		int i=0;
 		for(Punto p: resPuntos){

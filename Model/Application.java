@@ -60,7 +60,7 @@ public class Application {
 	
 	public static void main(String[] args) throws Exception{
 		
-		String DATA_INPUT = "karate";
+		String DATA_INPUT = "test";
 		
 		Application app = new Application();
 		app.readDataFromFile(DATA_INPUT);
@@ -71,20 +71,32 @@ public class Application {
 		int[] deg = app.alg.getDeg();
 		int[][] gMat = app.alg.getAdjMatrix();
 		double[][] weightMatrix = app.alg.getWeightMatrix(deg, weight, gMat);
-		double[] eigens = cal.getEigenValues(weightMatrix);
-		double[][] eigenVevtors = cal.getEigenVectors(weightMatrix);
-		jgx.run("test");
-		for(int i:weight){
-			System.out.print(" "+i);
-		}
-		System.out.println('\n'+"Eigen values:");
-		for(int i=0;i<eigens.length;i++){
-			System.out.println("eigen value:"+'\t'+eigens[i]);
-			System.out.print("Vector:");
-			for(int j=0;j<eigenVevtors[i].length;j++){
-				System.out.print(eigenVevtors[i][j]+",");
+//		double[] eigens = cal.getEigenValues(weightMatrix);
+//		double[][] eigenVevtors = cal.getEigenVectors(weightMatrix);
+		for(int i=2;i<app.alg.getNodeNum();i++){
+			ArrayList<Double> resqv = cal.spectral_bisection(weightMatrix, i);
+			System.out.println("qv for "+i);
+			double maqv = -1e9;
+			for(Double qv:resqv){
+				System.out.print(qv+",");
+				maqv = Math.max(maqv, qv);
 			}
-			System.out.println();
+			System.out.println("\nqv for "+i+", max="+maqv+"\n-----------------");
 		}
+//		int[] cc = {1,1,1,3,2,2,2,3,3,3};
+//		System.out.print(cal.getQ(cc));
+		jgx.run("test");
+//		for(int i:weight){
+//			System.out.print(" "+i);
+//		}
+//		System.out.println('\n'+"Eigen values:");
+//		for(int i=0;i<eigens.length;i++){
+//			System.out.println("eigen value:"+'\t'+eigens[i]);
+//			System.out.print("Vector:");
+//			for(int j=0;j<eigenVevtors[i].length;j++){
+//				System.out.print(eigenVevtors[i][j]+",");
+//			}
+//			System.out.println();
+//		}
 	}
 }

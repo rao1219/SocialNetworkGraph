@@ -86,11 +86,12 @@ public class Calculator {
 		}
 		return innerEdgeNum / (2.0*edgeNum);
 	}
-	public void spectral_bisection(double[][] mat, int g){
+	public ArrayList<Double> spectral_bisection(double[][] mat, int g){
 		double[][] mat_n = norm(mat, 0);
 		double[] eValues = getEigenValues(mat_n);
 		double[][] eVectors = getEigenVectors(mat_n);
 		List<Eigen> eigens = new ArrayList<Eigen>();
+		ArrayList<Double> qvList = new ArrayList<Double>();
 		for(int i = 0; i < eValues.length; i++){
 			eigens.add(new Eigen(eValues[i], eVectors[i]));
 		}
@@ -99,12 +100,14 @@ public class Calculator {
 		/*
 		 * TODO 得到待分类的向量集合
 		 */
-		
+		double maqv = -1e9;
+		int[] makind = null;
+		List<Double[]> vectors = null;
 		for(int i = 1; i < g && i < eigens.size(); i++){
 			/*
 			 * TODO kmeasn 聚类
 			 */
-			List<Double[]> vectors = new ArrayList<>();
+			vectors = new ArrayList<>();
 			for(int j = 0; j < alg.getNodeNum(); j ++){
 				Double[] vec = new Double[i];
 				for(int k = 0; k < i; k++){
@@ -116,10 +119,28 @@ public class Calculator {
 			int[] kind = kp.getCluster(g);
 			
 			double qv = this.getQ(kind);
+			if(maqv < qv){
+				maqv = qv;
+				makind = kind;
+			}
+			qvList.add(qv);
 			/*
 			 * 得到模块度Q值，作出评价
 			 */
 		}
+//		for(int i = 0; i < vectors.size(); i++){
+//			Double[] tmp = vectors.get(i);
+//			System.out.print(alg.getIndexToUser().get(i)+":");
+//			for(int j = 0; j < tmp.length; j++){
+//				System.out.print(tmp[j]+",");
+//			}
+//			System.out.print("\n");
+//		}
+//		System.out.println("maqv: "+maqv);
+//		for(int i = 0; i < alg.getNodeNum(); i++){
+//			System.out.println(alg.getIndexToUser().get(i)+":"+makind[i]);
+//		}
+		return qvList;
 		
 	}
 	public static void main(String[] args) {

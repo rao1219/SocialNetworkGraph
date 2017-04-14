@@ -27,7 +27,7 @@ public class KMeans {
 	    }
 
 	    Double[] d = new Double[c.getPuntos().get(0).getGrado()];
-	    Arrays.fill(d, 0f);
+	    Arrays.fill(d, new Double(0f));
 	    for (Punto p : c.getPuntos()) {
 		for (int i = 0; i < p.getGrado(); i++) {
 		    d[i] += (p.get(i) / c.getPuntos().size());
@@ -109,7 +109,7 @@ public class KMeans {
 
 	for (int i = 0; i < k; i++) {
 	    Double[] data = new Double[puntos.get(0).getGrado()];
-	    Arrays.fill(data, 0f);
+	    Arrays.fill(data, new Double(0f));
 	    for (int d = 0; d < puntos.get(0).getGrado(); d++) {
 		data[d] = random.nextDouble()
 			* (maximos.get(d) - minimos.get(d)) + minimos.get(d);
