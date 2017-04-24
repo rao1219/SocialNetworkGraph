@@ -58,8 +58,41 @@ public class Application {
 		return this.weight;
 	}
 	
-	public static void main(String[] args) throws Exception{
+	public double[][] getEvaluateMatrix(int METHOD) throws Exception{
+		int nodeNum = this.alg.getNodeNum();
+		double[][] EM = null;
+		int[] weight = this.getWeights();
+		int[] deg = this.alg.getDeg();
+		int[][] gMat = this.alg.getAdjMatrix();
 		
+		switch(METHOD){
+			case 0:
+				EM = this.alg.getWeightMatrix(deg, weight, gMat);
+				break;
+			case 1:
+				double[] DBdeg = new double[nodeNum];
+				double sum = 0;
+				for(int a:deg) sum += a;
+				for(int i = 0; i < nodeNum; i++) DBdeg[i] = deg[i] / sum;
+				EM = this.alg.getWeightMatrix(deg, DBdeg, gMat); 
+				break;
+			case 2:
+				int[] J = this.alg.getJ();
+				int[] allDist = this.alg.getVToAllDist();
+				double[] c = new double[nodeNum];
+				for(int i = 0; i < nodeNum; i++){
+					double fenmu = J[i] / (nodeNum-1);
+					double fenzi = allDist[i] / J[i];
+					c[i] = fenmu / fenzi;
+				}
+				EM = this.alg.getWeightMatrix(deg, c, gMat);
+				break;
+		}
+		return EM;
+	}
+	
+	public static void main(String[] args) throws Exception{
+		int METHOD = 0;
 		String DATA_INPUT = "test";
 		
 		Application app = new Application();
@@ -67,14 +100,10 @@ public class Application {
 		Visuallizator jgx = new Visuallizator();
 		jgx.generateGraph(app.nodeList, app.edgeList);
 		Calculator cal = new Calculator(app.alg);
-		int[] weight = app.getWeights();
-		int[] deg = app.alg.getDeg();
-		int[][] gMat = app.alg.getAdjMatrix();
-		double[][] weightMatrix = app.alg.getWeightMatrix(deg, weight, gMat);
-//		double[] eigens = cal.getEigenValues(weightMatrix);
-//		double[][] eigenVevtors = cal.getEigenVectors(weightMatrix);
+		
+		double[][] evaluateMatrix = app.getEvaluateMatrix(METHOD);
 		for(int i=2;i<app.alg.getNodeNum();i++){
-			ArrayList<Double> resqv = cal.spectral_bisection(weightMatrix, i);
+			ArrayList<Double> resqv = cal.spectral_bisection(evaluateMatrix, i);
 			System.out.println("qv for "+i);
 			double maqv = -1e9;
 			for(Double qv:resqv){

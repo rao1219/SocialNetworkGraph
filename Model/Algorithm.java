@@ -14,6 +14,7 @@ public class Algorithm {
 	private ArrayList<ArrayList<Tuple<Integer, Integer>>> graph;
 	private HashSet<Tuple<Integer, Integer>> edgeSet;
 	private int[][] dist;
+	private int INF = (int)1e9;
 	private int[] deg;
 	private boolean isNewest;
 	private int nodeNum = 0;
@@ -35,7 +36,27 @@ public class Algorithm {
 		}
 		return deg;
 	}
+	public int[] getJ(){
+		int[] J = new int[nodeNum];
+		for(int i = 0; i < nodeNum; i++){
+			for(int j = 0; j < nodeNum; j++){
+				if(i == j) continue;
+				if(dist[i][j] != INF) J[i] += 1; 
+			}
+		}
+		return J;
+	}
 	
+	public int[] getVToAllDist(){
+		int[] allDist = new int[nodeNum];
+		for(int i = 0; i < nodeNum; i++){
+			for(int j = 0; j < nodeNum; j++){
+				if(i == j) continue;
+				if(dist[i][j] != INF) allDist[i] += dist[i][j];
+			}
+		}
+		return allDist;
+	}
 	/**
 	 * @param deg 图度数矩阵
 	 * @param nodeWeight 图中节点的权值
@@ -43,6 +64,32 @@ public class Algorithm {
 	 * @return 该图的权值矩阵
 	 */
 	public double[][] getWeightMatrix(int[] deg, int[] nodeWeight, int[][] gMat){
+		double[][] wMatrix = new double[nodeNum][nodeNum];
+		for(int i = 0; i < nodeNum; i++)
+			wMatrix[i][i] = 0;
+		// 整个图中所有最短路的数量
+		double avrDeg = 0;
+		for(int i = 0; i < nodeNum; i++){
+			avrDeg += deg[i];
+		}
+		avrDeg /= nodeNum;
+		int allSPN = nodeNum*(nodeNum-1);
+		for(int i = 0;i < nodeNum; i++){
+			for(int j = 0; j < nodeNum; j++){
+				if(i == j) continue;
+				wMatrix[i][j] = (double)gMat[i][j] * nodeWeight[j] / avrDeg;
+			}
+		}
+		return wMatrix;
+	}
+	
+	/**
+	 * @param deg 图度数矩阵
+	 * @param nodeWeight 图中节点的权值
+	 * @param gMat 图的邻接矩阵
+	 * @return 该图的权值矩阵
+	 */
+	public double[][] getWeightMatrix(int[] deg, double[] nodeWeight, int[][] gMat){
 		double[][] wMatrix = new double[nodeNum][nodeNum];
 		for(int i = 0; i < nodeNum; i++)
 			wMatrix[i][i] = 0;
@@ -149,7 +196,7 @@ public class Algorithm {
 		int[] d = new int[nodeNum];
 		boolean[] inq = new boolean[nodeNum];
 		
-		for(int i = 0; i < nodeNum; i++) d[i] = (int) 1e9;
+		for(int i = 0; i < nodeNum; i++) d[i] = INF;
 		d[s] = 0;
 		Queue<Integer> que = new LinkedList<Integer>();
 		que.offer(s);
