@@ -2,6 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -87,34 +89,65 @@ public class Application {
 				}
 				EM = this.alg.getWeightMatrix(deg, c, gMat);
 				break;
+			case 3:
+				double[][] dGmat = new double[gMat.length][gMat[0].length];
+				for(int i=0;i<gMat.length;i++){
+					for(int j=0;j<gMat[i].length;j++){
+						dGmat[i][j] = (double)gMat[i][j];
+					}
+				}
+				EM = dGmat;
+				break;
 		}
 		return EM;
 	}
+	public void SaveWeightMatrixToFile(double[][] matrix,int method, String data_type){
+		String fileName = data_type + "_" + method + ".txt";
+		File file = new File("./",fileName);
+		try{
+			file.createNewFile();
+			FileWriter out = new FileWriter(file);
+			for(int i=0;i<matrix.length;i++){
+				for(int j=0;j<matrix[i].length;j++){
+					out.write(matrix[i][j]+"\t");
+				}
+				out.write("\n");
+			}
+			out.close();
+		}catch (Exception ex){}
+		
+	}
 	
 	public static void main(String[] args) throws Exception{
-		int METHOD = 0;
+		
+		int METHOD = 3;
 		String DATA_INPUT = "test";
 		
-		Application app = new Application();
-		app.readDataFromFile(DATA_INPUT);
-		Visuallizator jgx = new Visuallizator();
-		jgx.generateGraph(app.nodeList, app.edgeList);
-		Calculator cal = new Calculator(app.alg);
-		
-		double[][] evaluateMatrix = app.getEvaluateMatrix(METHOD);
-		for(int i=2;i<app.alg.getNodeNum();i++){
-			ArrayList<Double> resqv = cal.spectral_bisection(evaluateMatrix, i);
-			System.out.println("qv for "+i);
-			double maqv = -1e9;
-			for(Double qv:resqv){
-				System.out.print(qv+",");
-				maqv = Math.max(maqv, qv);
+		for(int m = 0;m<=3;m++){
+			Application app = new Application();
+			app.readDataFromFile(DATA_INPUT);
+	//		Visuallizator jgx = new Visuallizator();
+	//		jgx.generateGraph(app.nodeList, app.edgeList);
+			Calculator cal = new Calculator(app.alg);
+			
+			double[][] evaluateMatrix = app.getEvaluateMatrix(m);
+			for(int i=2;i<app.alg.getNodeNum();i++){
+				ArrayList<Double> resqv = cal.spectral_bisection(evaluateMatrix, i);
+				System.out.println("qv for "+i);
+				double maqv = -1e9;
+				for(Double qv:resqv){
+					System.out.print(qv+",");
+					maqv = Math.max(maqv, qv);
+				}
+				System.out.println("\nqv for "+i+", max="+maqv+"\n-----------------");
 			}
-			System.out.println("\nqv for "+i+", max="+maqv+"\n-----------------");
+			app.SaveWeightMatrixToFile(evaluateMatrix, m, DATA_INPUT);
+			
 		}
+		
 //		int[] cc = {1,1,1,3,2,2,2,3,3,3};
 //		System.out.print(cal.getQ(cc));
-		jgx.run("test");
+//		jgx.run("test");
 //		for(int i:weight){
 //			System.out.print(" "+i);
 //		}
