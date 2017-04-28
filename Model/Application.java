@@ -59,6 +59,12 @@ public class Application {
 		this.weight = alg.getNodeWeights(dist);
 		return this.weight;
 	}
+	public ArrayList<String> getNodeList(){
+		return this.nodeList;
+	}
+	public ArrayList<Edge> getEdgeList(){
+		return this.edgeList;
+	}
 	
 	public double[][] getEvaluateMatrix(int METHOD) throws Exception{
 		int nodeNum = this.alg.getNodeNum();
@@ -147,7 +153,7 @@ public class Application {
 		
 //		int[] cc = {1,1,1,3,2,2,2,3,3,3};
 //		System.out.print(cal.getQ(cc));
-//		jgx.run("test");
+//		jgx.run(DATA_INPUT);
 //		for(int i:weight){
 //			System.out.print(" "+i);
 //		}

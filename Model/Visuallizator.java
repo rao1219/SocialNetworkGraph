@@ -143,18 +143,16 @@ public class Visuallizator
         this.addEdgeWeight(v2, v4, 1.9);
         
     }
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
-        Visuallizator applet = new Visuallizator();
-        applet.init();
-        
-        JFrame frame = new JFrame();
-        frame.getContentPane().add(applet);
-        frame.setTitle("Graph - raoqi");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    	String DATA_INPUT = "facebook";
+    	Application app = new Application();
+		app.readDataFromFile(DATA_INPUT);
+		Visuallizator jgx = new Visuallizator();
+		jgx.generateGraph(app.getNodeList(), app.getEdgeList());
+		
+		
+       jgx.run(DATA_INPUT);
     }
 }
 
